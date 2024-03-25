@@ -8,6 +8,7 @@ namespace Datos.Entidades
 {
     internal class Renta
     {
+
         public int RentaId { get; set; }
         public int ClienteId { get; set; }
         public int PeliculaId { get; set; }
