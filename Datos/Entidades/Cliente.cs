@@ -6,12 +6,16 @@ using System.Threading.Tasks;
 
 namespace Datos.Entidades
 {
-    internal class Cliente
+    public class Cliente
     {
         public int ClienteId { get; set; }
-        public string Nombres { get; set; }
-        public string Apellidos { get; set; }
-        public DateTime FechaRegistro { get; set; }
+        public string Nombre { get; set; } = "";
+        public string Apellidos { get; set; } = "";
+        public DateTime FechaIngreso { get; set; }
         public bool Estado { get; set; }
+
+        public List<Renta> Rentas { get; set; } = new List<Renta>();
+
+
     }
 }
