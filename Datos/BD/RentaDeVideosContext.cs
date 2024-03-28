@@ -1,25 +1,34 @@
 ﻿using Datos.Entidades;
+
+using Datos.Repositories;
+using Datos.Repository;
+using System;
 using System.Data.Entity;
 
 namespace Datos.BD
 {
     public class RentaDeVideosContext : DbContext
     {
+        private readonly UnitOfWork _unitOfWork;
 
-        //Solo de esta forma me acepto la migracion, me daba el siguiente error,No connection string named 'RPELISCONEC' could be found in the application config file
         public RentaDeVideosContext()
-      : base("Data Source=DESKTOP-Q6JBD0N\\SQLEXPRESS01;Initial Catalog=RPELISCONEC;Persist Security Info=True;User ID=sa;Password=123456789;MultipleActiveResultSets=True")
-
+            : base("Data Source=DESKTOP-Q6JBD0N\\SQLEXPRESS01;Initial Catalog=RPELISCONEC;Persist Security Info=True;User ID=sa;Password=123456789;MultipleActiveResultSets=True")
         {
-            Peliculas = Set<Pelicula>();
-            Clientes = Set<Cliente>();
-            Rentas = Set<Renta>();
+            _unitOfWork = new UnitOfWork(this);
+
+            Peliculas = _unitOfWork.Peliculas;
+            Clientes = _unitOfWork.Clientes;
+            Rentas = _unitOfWork.Rentas;
         }
 
-        public DbSet<Pelicula> Peliculas { get; set; }
-        public DbSet<Cliente> Clientes { get; set; }
-        public DbSet<Renta> Rentas { get; set; }
+        public IRepository<Pelicula> Peliculas { get; }
+        public IRepository<Cliente> Clientes { get; }
+        public IRepository<Renta> Rentas { get; }
 
+        public override int SaveChanges()
+        {
+            return base.SaveChanges();
+        }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             // Mapeo de las entidades a las tablas
