@@ -10,9 +10,8 @@ using System.Windows.Forms;
 
 namespace Presentacion
 {
-    public partial class Menu : Form
+    public partial class Menu: Form
     {
-        //prueba1
         public Menu()
         {
             InitializeComponent();
