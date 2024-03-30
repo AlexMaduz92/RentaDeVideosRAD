@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Datos.Entidades
 {
-   public class Pelicula
+    public class Pelicula
     {
         public int PeliculaId { get; set; }
         public string Nombre { get; set; } = "";
@@ -13,8 +16,6 @@ namespace Datos.Entidades
         public decimal PrecioRenta { get; set; }
         public bool Estado { get; set; }
 
-        public List<Renta> Rentas { get; set; } = new List<Renta>();
-
+        public List<Renta> Rentas { get; set; } = new();
     }
 }
-

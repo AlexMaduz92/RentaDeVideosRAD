@@ -7,15 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Infrastructure\Repository.cs" />
+    <Compile Remove="Infrastructure\UnitOfWork.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Infrastructure\Repository.cs" />
+    <Content Include="Infrastructure\UnitOfWork.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\RentaDeVideos\RentaDeVideos.vbproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Repository\" />
   </ItemGroup>
 
 </Project>
