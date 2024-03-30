@@ -7,6 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Formularios\Menu.Designer.vb" />
+    <None Remove="Formularios\Menu.vb" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Formularios\Menu.Designer.vb" />
+    <Compile Include="Formularios\Menu.vb">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
   </ItemGroup>
 
