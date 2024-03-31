@@ -16,6 +16,8 @@ namespace Datos.Entidades
         public decimal PrecioRenta { get; set; }
         public bool Estado { get; set; }
 
-        public List<Renta> Rentas { get; set; } = new();
+        public List<Renta> Rentas { get; set; } = new List<Renta>();
+
+
     }
 }
