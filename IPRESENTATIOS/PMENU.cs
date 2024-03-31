@@ -16,5 +16,11 @@ namespace IPRESENTATIOS
         {
             InitializeComponent();
         }
+
+        private void peliculaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            IPelicula peliculaForm = new IPelicula();
+            peliculaForm.Show();
+        }
     }
 }

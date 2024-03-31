@@ -1,9 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Datos.Repository
 {
+    public interface IRepository<T> where T : class
+    {
+        IQueryable<T> GetAll();
+        IQueryable<T> Find(Expression<Func<T, bool>> predicate);
+        T GetById(int id);
+        void Insert(T entity);
+        void Update(T entity);
+        void Delete(T entity);
+    }
+
     public class Repository<T> : IRepository<T> where T : class
     {
         private readonly DbContext _context;
@@ -18,6 +30,11 @@ namespace Datos.Repository
         public IQueryable<T> GetAll()
         {
             return _dbSet.AsQueryable();
+        }
+
+        public IQueryable<T> Find(Expression<Func<T, bool>> predicate)
+        {
+            return _dbSet.Where(predicate);
         }
 
         public T GetById(int id)
