@@ -50,12 +50,11 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Black", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(558, 9);
+            label1.Location = new Point(313, -1);
             label1.Name = "label1";
             label1.Size = new Size(188, 48);
             label1.TabIndex = 0;
             label1.Text = "CLIENTES";
-            label1.Click += label1_Click;
             // 
             // label2
             // 
@@ -146,12 +145,12 @@
             DGVCliente.Location = new Point(7, 279);
             DGVCliente.Name = "DGVCliente";
             DGVCliente.RowHeadersWidth = 62;
-            DGVCliente.Size = new Size(1169, 254);
+            DGVCliente.Size = new Size(803, 254);
             DGVCliente.TabIndex = 11;
             // 
             // BtnGuardar
             // 
-            BtnGuardar.Location = new Point(698, 219);
+            BtnGuardar.Location = new Point(660, 69);
             BtnGuardar.Name = "BtnGuardar";
             BtnGuardar.Size = new Size(112, 34);
             BtnGuardar.TabIndex = 12;
@@ -160,7 +159,7 @@
             // 
             // BtnActualizar
             // 
-            BtnActualizar.Location = new Point(867, 219);
+            BtnActualizar.Location = new Point(660, 129);
             BtnActualizar.Name = "BtnActualizar";
             BtnActualizar.Size = new Size(112, 34);
             BtnActualizar.TabIndex = 13;
@@ -169,7 +168,7 @@
             // 
             // BtnEliminar
             // 
-            BtnEliminar.Location = new Point(1041, 220);
+            BtnEliminar.Location = new Point(660, 194);
             BtnEliminar.Name = "BtnEliminar";
             BtnEliminar.Size = new Size(112, 33);
             BtnEliminar.TabIndex = 14;
@@ -180,7 +179,7 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1188, 530);
+            ClientSize = new Size(823, 530);
             Controls.Add(BtnEliminar);
             Controls.Add(BtnActualizar);
             Controls.Add(BtnGuardar);
@@ -197,6 +196,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Name = "ICliente";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "ICliente";
             ((System.ComponentModel.ISupportInitialize)DGVCliente).EndInit();
             ResumeLayout(false);

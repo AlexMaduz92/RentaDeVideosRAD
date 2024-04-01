@@ -22,5 +22,11 @@ namespace IPRESENTATIOS
             IPelicula peliculaForm = new IPelicula();
             peliculaForm.Show();
         }
+
+        private void clienteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ICliente clienteaForm = new ICliente();
+            clienteaForm.Show();
+        }
     }
 }
