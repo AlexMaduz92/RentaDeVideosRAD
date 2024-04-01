@@ -31,6 +31,10 @@ namespace IPRESENTATIOS
             repositorioPeliculas = new RepositorioPeliculas(repositorio);
             CargarGeneros(); // Cargar los géneros en el ComboBox
             CargarPeliculasEnDataGridView(); // Cargar las películas en el DataGridView
+
+            // Suscribir el evento CellClick
+            DGVVista.CellClick += DGVVista_CellClick;
+            BtnActualizar.Click += BtnActualizar_Click;
         }
 
         private void CargarGeneros()
@@ -46,21 +50,27 @@ namespace IPRESENTATIOS
 
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
-            if (CamposValidos())
+            DialogResult result = MessageBox.Show("¿Estás seguro de guardar esta película?", "Confirmar Guardar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
             {
-                try
+                if (CamposValidos())
                 {
-                    GuardarPelicula();
-                    LimpiarControles();
-                    MessageBox.Show("Película guardada correctamente");
-                    CargarPeliculasEnDataGridView(); // Volver a cargar las películas en el DataGridView
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al guardar la película: " + ex.Message);
+                    try
+                    {
+                        GuardarPelicula();
+                        LimpiarControles();
+                        MessageBox.Show("Película guardada correctamente");
+                        CargarPeliculasEnDataGridView(); // Volver a cargar las películas en el DataGridView
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error al guardar la película: " + ex.Message);
+                    }
                 }
             }
         }
+
 
         private void CargarPeliculasEnDataGridView()
         {
@@ -69,6 +79,23 @@ namespace IPRESENTATIOS
             // Asignar la lista de películas al DataSource del DataGridView
             DGVVista.DataSource = peliculas;
         }
+        private void DGVVista_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = DGVVista.Rows[e.RowIndex];
+
+                // Asignar los valores de la fila seleccionada a los controles del formulario
+                TxtId.Text = row.Cells["PeliculaId"].Value.ToString();
+                TxtNombre.Text = row.Cells["Nombre"].Value.ToString();
+                CbGenero.SelectedItem = row.Cells["Genero"].Value.ToString();
+                TxtAutores.Text = row.Cells["Autores"].Value.ToString();
+                TxtExsitencia.Text = row.Cells["Existencia"].Value.ToString();
+                TxtPrecioRenta.Text = row.Cells["PrecioRenta"].Value.ToString();
+                CHBEstado.Checked = Convert.ToBoolean(row.Cells["Estado"].Value);
+            }
+        }
+
 
         private bool CamposValidos()
         {
@@ -142,6 +169,50 @@ namespace IPRESENTATIOS
                 MessageBox.Show("Error al guardar la película: " + ex.Message);
             }
         }
+
+        private void BtnActualizar_Click(object sender, EventArgs e)
+        {
+            if (DGVVista.SelectedRows.Count > 0)
+            {
+                DialogResult result = MessageBox.Show("¿Estás seguro de actualizar esta película?", "Confirmar Actualización", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        // Obtener la película seleccionada en el DataGridView
+                        Pelicula pelicula = (Pelicula)DGVVista.SelectedRows[0].DataBoundItem;
+
+                        // Actualizar los datos de la película con la información de los controles del formulario
+                        pelicula.Nombre = TxtNombre.Text;
+                        pelicula.Genero = CbGenero.SelectedItem.ToString();
+                        pelicula.Autores = TxtAutores.Text;
+                        pelicula.Existencia = int.Parse(TxtExsitencia.Text);
+                        pelicula.PrecioRenta = decimal.Parse(TxtPrecioRenta.Text);
+                        pelicula.Estado = CHBEstado.Checked;
+
+                        // Guardar los cambios en el repositorio
+                        repositorioPeliculas.ActualizarPelicula(pelicula);
+
+                        // Actualizar el DataGridView
+                        CargarPeliculasEnDataGridView();
+
+                        MessageBox.Show("Película actualizada correctamente");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error al actualizar la película: " + ex.Message);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecciona una película para actualizar");
+            }
+        }
+
+
+
 
         private void LimpiarControles()
         {
