@@ -1,53 +1,64 @@
-﻿using System;
-using Datos.Entidades;
-using Datos.Repositories;
-using System.Data.Entity;
+﻿using Datos.Repositories;
+using System;
 
 namespace Datos.Infrastructure
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IDisposable
     {
-        private readonly DbContext _context;
-        private bool _disposed;
+        private readonly RentaDeVideosContext _context;
+        private Repository<Pelicula> _peliculaRepository;
+        private Repository<Cliente> _clienteRepository;
+        private Repository<Renta> _rentaRepository;
 
-        public UnitOfWork(DbContext context)
+        public UnitOfWork(RentaDeVideosContext context)
         {
-            _context = context;
-            Peliculas = new Repository<Pelicula>(_context);
-            Clientes = new Repository<Cliente>(_context);
-            Rentas = new Repository<Renta>(_context);
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public IRepository<Pelicula> Peliculas { get; private set; }
-        public IRepository<Cliente> Clientes { get; private set; }
-        public IRepository<Renta> Rentas { get; private set; }
-
-        public int SaveChanges()
+        public Repository<Pelicula> PeliculaRepository
         {
-            return _context.SaveChanges();
+            get
+            {
+                if (_peliculaRepository == null)
+                {
+                    _peliculaRepository = new Repository<Pelicula>(_context);
+                }
+                return _peliculaRepository;
+            }
+        }
+
+        public Repository<Cliente> ClienteRepository
+        {
+            get
+            {
+                if (_clienteRepository == null)
+                {
+                    _clienteRepository = new Repository<Cliente>(_context);
+                }
+                return _clienteRepository;
+            }
+        }
+
+        public Repository<Renta> RentaRepository
+        {
+            get
+            {
+                if (_rentaRepository == null)
+                {
+                    _rentaRepository = new Repository<Renta>(_context);
+                }
+                return _rentaRepository;
+            }
+        }
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
         }
 
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            _context.Dispose();
         }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposed)
-            {
-                if (disposing)
-                {
-                    // Liberar recursos administrados
-                    _context.Dispose();
-                }
-
-                // Liberar recursos no administrados
-
-                _disposed = true;
-            }
-        }
-        Recuerda que esta corrección es válida si la clase UnitOfWork
     }
 }

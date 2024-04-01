@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
-using Datos.Entidades;
-using Datos.Repositories;
+using System.Linq.Expressions;
 
-namespace Datos.Infrastructure
+namespace Datos.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
@@ -13,13 +12,18 @@ namespace Datos.Infrastructure
 
         public Repository(DbContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
             _dbSet = context.Set<T>();
         }
 
         public IQueryable<T> GetAll()
         {
             return _dbSet.AsQueryable();
+        }
+
+        public IQueryable<T> Find(Expression<Func<T, bool>> predicate)
+        {
+            return _dbSet.Where(predicate);
         }
 
         public T GetById(int id)
@@ -41,5 +45,12 @@ namespace Datos.Infrastructure
         {
             _dbSet.Remove(entity);
         }
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
     }
+
+
 }
