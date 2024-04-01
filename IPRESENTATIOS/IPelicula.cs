@@ -36,16 +36,33 @@ namespace IPRESENTATIOS
             DGVVista.CellClick += DGVVista_CellClick;
             BtnActualizar.Click += BtnActualizar_Click;
             BtnEliminar.Click += BtnEliminar_Click;
+
+            // TxtId
+            TxtId.Text = (context.Peliculas.Max(p => (int?)p.PeliculaId) ?? 0 + 1).ToString();
+            TxtId.Enabled = false;
+
+            // CbGenero
+            List<string> generos = new List<string>
+    {
+        "Acción", "Animación", "Anime", "Aventura", "Bélico", "Ciencia Ficción",
+        "Crimen", "Comedia", "Documental", "Drama", "Fantasía", "Historia",
+        "Musical", "Misterio", "Terror", "Suspenso", "Romance"
+    };
+            CbGenero.DataSource = generos;
+            CbGenero.DropDownStyle = ComboBoxStyle.DropDownList;
+
+            // DGVVista
+            DGVVista.ReadOnly = true;
+            DGVVista.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
 
         private void CargarGeneros()
         {
-            // Cargar los géneros en el ComboBox
             CbGenero.Items.AddRange(new string[]
             {
-                "Acción", "Animación", "Anime", "Aventura", "Bélico", "Ciencia Ficción",
-                "Crimen", "Comedia", "Documental", "Drama", "Fantasía", "Historia",
-                "Musical", "Misterio", "Terror", "Suspenso", "Romance"
+        "Acción", "Animación", "Anime", "Aventura", "Bélico", "Ciencia Ficción",
+        "Crimen", "Comedia", "Documental", "Drama", "Fantasía", "Historia",
+        "Musical", "Misterio", "Terror", "Suspenso", "Romance"
             });
         }
 
