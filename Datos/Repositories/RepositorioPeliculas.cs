@@ -33,5 +33,21 @@ namespace Datos.Repositories
                 Console.WriteLine("Error al guardar la película: " + ex.Message);
             }
         }
+
+        public void ActualizarPelicula(Pelicula pelicula)
+        {
+            try
+            {
+                _repositorio.Update(pelicula);
+                _repositorio.SaveChanges(); // Guardar los cambios en la base de datos
+            }
+            catch (Exception ex)
+            {
+                // Manejar la excepción o mostrar un mensaje de error
+                Console.WriteLine("Error al actualizar la película: " + ex.Message);
+            }
+        }
+
+
     }
 }
