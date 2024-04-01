@@ -35,6 +35,7 @@ namespace IPRESENTATIOS
             // Suscribir el evento CellClick
             DGVVista.CellClick += DGVVista_CellClick;
             BtnActualizar.Click += BtnActualizar_Click;
+            BtnEliminar.Click += BtnEliminar_Click;
         }
 
         private void CargarGeneros()
@@ -74,10 +75,11 @@ namespace IPRESENTATIOS
 
         private void CargarPeliculasEnDataGridView()
         {
-            var peliculas = repositorioPeliculas.ObtenerPeliculas(); // Obtener las películas utilizando el repositorio
-
-            // Asignar la lista de películas al DataSource del DataGridView
-            DGVVista.DataSource = peliculas;
+            using (var context = new RentaDeVideosContext())
+            {
+                var peliculasActivas = context.Peliculas.Where(p => p.Estado == true).ToList();
+                DGVVista.DataSource = peliculasActivas;
+            }
         }
         private void DGVVista_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -210,6 +212,49 @@ namespace IPRESENTATIOS
                 MessageBox.Show("Por favor, selecciona una película para actualizar");
             }
         }
+
+        private void BtnEliminar_Click(object sender, EventArgs e)
+        {
+            if (DGVVista.SelectedRows.Count > 0)
+            {
+                try
+                {
+                    // Obtener la película seleccionada en el DataGridView
+                    Pelicula pelicula = (Pelicula)DGVVista.SelectedRows[0].DataBoundItem;
+
+                    // Mostrar un cuadro de diálogo de confirmación
+                    DialogResult result = MessageBox.Show("¿Estás seguro de que quieres eliminar la película?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    // Si el usuario confirma la eliminación, proceder
+                    if (result == DialogResult.Yes)
+                    {
+                        // Cambiar el estado de la película a inactivo (por ejemplo, false)
+                        pelicula.Estado = false; // o el valor que represente "inactivo"
+
+                        // Actualizar la película en el repositorio
+                        repositorioPeliculas.ActualizarPelicula(pelicula);
+
+                        // Actualizar el DataGridView
+                        CargarPeliculasEnDataGridView();
+
+                        MessageBox.Show("Película eliminada correctamente");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al eliminar la película: " + ex.Message);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecciona una película para eliminar");
+            }
+        }
+
+
+
+
+
 
 
 

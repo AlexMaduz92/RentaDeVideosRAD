@@ -137,14 +137,14 @@
             // 
             TxtId.Location = new Point(140, 48);
             TxtId.Name = "TxtId";
-            TxtId.Size = new Size(150, 31);
+            TxtId.Size = new Size(182, 31);
             TxtId.TabIndex = 9;
             // 
             // TxtNombre
             // 
             TxtNombre.Location = new Point(140, 89);
             TxtNombre.Name = "TxtNombre";
-            TxtNombre.Size = new Size(150, 31);
+            TxtNombre.Size = new Size(182, 31);
             TxtNombre.TabIndex = 10;
             // 
             // CbGenero
@@ -158,21 +158,21 @@
             // 
             TxtAutores.Location = new Point(138, 183);
             TxtAutores.Name = "TxtAutores";
-            TxtAutores.Size = new Size(150, 31);
+            TxtAutores.Size = new Size(182, 31);
             TxtAutores.TabIndex = 12;
             // 
             // TxtExsitencia
             // 
             TxtExsitencia.Location = new Point(138, 229);
             TxtExsitencia.Name = "TxtExsitencia";
-            TxtExsitencia.Size = new Size(150, 31);
+            TxtExsitencia.Size = new Size(182, 31);
             TxtExsitencia.TabIndex = 13;
             // 
             // TxtPrecioRenta
             // 
             TxtPrecioRenta.Location = new Point(140, 283);
             TxtPrecioRenta.Name = "TxtPrecioRenta";
-            TxtPrecioRenta.Size = new Size(150, 31);
+            TxtPrecioRenta.Size = new Size(182, 31);
             TxtPrecioRenta.TabIndex = 14;
             // 
             // CHBEstado
@@ -218,7 +218,7 @@
             BtnEliminar.Name = "BtnEliminar";
             BtnEliminar.Size = new Size(112, 34);
             BtnEliminar.TabIndex = 19;
-            BtnEliminar.Text = "Elimianar";
+            BtnEliminar.Text = "Eliminar";
             BtnEliminar.UseVisualStyleBackColor = true;
             // 
             // IPelicula
