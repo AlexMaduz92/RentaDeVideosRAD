@@ -139,7 +139,6 @@
             TxtId.Name = "TxtId";
             TxtId.Size = new Size(150, 31);
             TxtId.TabIndex = 9;
-            TxtId.Enabled = false;
             // 
             // TxtNombre
             // 

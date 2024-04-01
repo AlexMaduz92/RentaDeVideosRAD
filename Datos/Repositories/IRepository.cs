@@ -14,6 +14,7 @@ namespace Datos.Repository
         void Insert(T entity);
         void Update(T entity);
         void Delete(T entity);
+        void SaveChanges();
     }
 
     public class Repository<T> : IRepository<T> where T : class
@@ -55,6 +56,11 @@ namespace Datos.Repository
         public void Delete(T entity)
         {
             _dbSet.Remove(entity);
+        }
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
         }
     }
 }

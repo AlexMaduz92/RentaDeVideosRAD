@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Windows.Forms;
-using Datos.BD;
+﻿using Datos.BD;
 using Datos.Entidades;
 using Datos.Repositories;
 using Datos.Repository;
+using System;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace IPRESENTATIOS
 {
     static class Program
     {
-        /// <summary>
-        /// Punto de entrada principal para la aplicación.
-        /// </summary>
         [STAThread]
         static void Main()
         {
@@ -32,78 +27,125 @@ namespace IPRESENTATIOS
         {
             InitializeComponent();
             var context = new RentaDeVideosContext(); // Crear el contexto de la base de datos
-            var repositorio = new Repository<Pelicula>(context); // Crear el repositorio con el contexto
-            repositorioPeliculas = new RepositorioPeliculas(repositorio); // Inicializar el repositorio de películas
+            var repositorio = new Repository<Pelicula>(context);
+            repositorioPeliculas = new RepositorioPeliculas(repositorio);
+            CargarGeneros(); // Cargar los géneros en el ComboBox
+            CargarPeliculasEnDataGridView(); // Cargar las películas en el DataGridView
         }
 
         private void CargarGeneros()
         {
-            CbGenero.Items.Add("Acción");
-            CbGenero.Items.Add("Comedia");
-            CbGenero.Items.Add("Drama");
-        }
-
-        private List<Pelicula> ObtenerPeliculas()
-        {
-            return repositorioPeliculas.ObtenerPeliculas();
-        }
-
-        private void CargarDatos()
-        {
-            // Obtener todas las películas
-            List<Pelicula> peliculas = repositorioPeliculas.ObtenerPeliculas();
-
-            // Verificar si la lista de películas es nula antes de usarla
-            if (peliculas != null)
+            // Cargar los géneros en el ComboBox
+            CbGenero.Items.AddRange(new string[]
             {
-                // Filtrar las películas por el estado activo
-                var peliculasActivas = peliculas.Where(p => p.Estado).ToList();
-
-                // Mostrar las películas activas en el DataGridView
-                DGVVista.DataSource = peliculasActivas;
-            }
-            else
-            {
-                // Si la lista es nula, mostrar un mensaje o realizar alguna acción
-                MessageBox.Show("No se pudieron obtener las películas.");
-            }
+                "Acción", "Animación", "Anime", "Aventura", "Bélico", "Ciencia Ficción",
+                "Crimen", "Comedia", "Documental", "Drama", "Fantasía", "Historia",
+                "Musical", "Misterio", "Terror", "Suspenso", "Romance"
+            });
         }
 
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(TxtNombre.Text) && !string.IsNullOrEmpty(TxtAutores.Text)
-                && !string.IsNullOrEmpty(TxtExsitencia.Text) && !string.IsNullOrEmpty(TxtPrecioRenta.Text))
+            if (CamposValidos())
             {
-                if (CbGenero.SelectedItem != null)
+                try
                 {
-                    // Crear una nueva película con los datos ingresados por el usuario
-                    Pelicula pelicula = new Pelicula
-                    {
-                        Nombre = TxtNombre.Text,
-                        Genero = CbGenero.SelectedItem.ToString(),
-                        Autores = TxtAutores.Text,
-                        Existencia = Convert.ToInt32(TxtExsitencia.Text),
-                        PrecioRenta = Convert.ToDecimal(TxtPrecioRenta.Text),
-                        Estado = CHBEstado.Checked
-                    };
-
-                    // Llamar al método GuardarPelicula del repositorio para guardar la película
-                    repositorioPeliculas.GuardarPelicula(pelicula);
+                    GuardarPelicula();
+                    LimpiarControles();
                     MessageBox.Show("Película guardada correctamente");
+                    CargarPeliculasEnDataGridView(); // Volver a cargar las películas en el DataGridView
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Debes seleccionar un género para la película");
+                    MessageBox.Show("Error al guardar la película: " + ex.Message);
                 }
             }
-            else
+        }
+
+        private void CargarPeliculasEnDataGridView()
+        {
+            var peliculas = repositorioPeliculas.ObtenerPeliculas(); // Obtener las películas utilizando el repositorio
+
+            // Asignar la lista de películas al DataSource del DataGridView
+            DGVVista.DataSource = peliculas;
+        }
+
+        private bool CamposValidos()
+        {
+            // Validar que los campos obligatorios estén llenos y el género esté seleccionado
+            if (string.IsNullOrWhiteSpace(TxtNombre.Text) ||
+                string.IsNullOrWhiteSpace(TxtAutores.Text) ||
+                string.IsNullOrWhiteSpace(TxtExsitencia.Text) ||
+                string.IsNullOrWhiteSpace(TxtPrecioRenta.Text) ||
+                CbGenero.SelectedItem == null)
             {
-                MessageBox.Show("Debes completar todos los campos para guardar la película");
+                MessageBox.Show("Debes completar todos los campos obligatorios para guardar la película");
+                return false;
+            }
+
+            // Validar que el precio de renta sea un número decimal positivo
+            if (!decimal.TryParse(TxtPrecioRenta.Text, out decimal precioRenta) || precioRenta <= 0)
+            {
+                MessageBox.Show("El precio de renta debe ser un número decimal positivo");
+                return false;
+            }
+
+            // Validar que la existencia sea un número entero positivo
+            if (!int.TryParse(TxtExsitencia.Text, out int existencia) || existencia <= 0)
+            {
+                MessageBox.Show("La existencia debe ser un número entero positivo");
+                return false;
+            }
+
+            return true;
+        }
+
+        private void GuardarPelicula()
+        {
+            try
+            {
+                // Validar la conversión de existencia a int
+                if (!int.TryParse(TxtExsitencia.Text, out int existencia))
+                {
+                    MessageBox.Show("La existencia debe ser un número entero");
+                    return;
+                }
+
+                // Validar la conversión de precio de renta a decimal
+                if (!decimal.TryParse(TxtPrecioRenta.Text, out decimal precioRenta))
+                {
+                    MessageBox.Show("El precio de renta debe ser un número decimal");
+                    return;
+                }
+
+                // Crear una nueva película con los datos ingresados por el usuario
+                Pelicula pelicula = new Pelicula
+                {
+                    Nombre = TxtNombre.Text,
+                    Genero = CbGenero.SelectedItem.ToString(),
+                    Autores = TxtAutores.Text,
+                    Existencia = existencia,
+                    PrecioRenta = precioRenta,
+                    Estado = CHBEstado.Checked
+                };
+
+                // Llamar al método GuardarPelicula del repositorio para guardar la película
+                repositorioPeliculas.GuardarPelicula(pelicula);
+
+                // Limpiar los controles después de guardar
+                LimpiarControles();
+
+                MessageBox.Show("Película guardada correctamente");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al guardar la película: " + ex.Message);
             }
         }
 
         private void LimpiarControles()
         {
+            // Limpiar los controles después de guardar
             TxtNombre.Text = "";
             CbGenero.SelectedItem = null;
             TxtAutores.Text = "";
