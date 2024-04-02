@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Datos.BD;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -27,6 +28,12 @@ namespace IPRESENTATIOS
         {
             ICliente clienteaForm = new ICliente();
             clienteaForm.Show();
+        }
+
+        private void rentaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            IPRENTA rentaForm = new IPRENTA();
+            rentaForm.Show();
         }
     }
 }
