@@ -72,6 +72,7 @@
             rentaToolStripMenuItem.Name = "rentaToolStripMenuItem";
             rentaToolStripMenuItem.Size = new Size(270, 34);
             rentaToolStripMenuItem.Text = "Renta";
+            rentaToolStripMenuItem.Click += rentaToolStripMenuItem_Click;
             // 
             // PMENU
             // 
