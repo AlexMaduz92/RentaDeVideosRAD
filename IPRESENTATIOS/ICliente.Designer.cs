@@ -198,6 +198,7 @@
             Name = "ICliente";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ICliente";
+            Load += ICliente_Load;
             ((System.ComponentModel.ISupportInitialize)DGVCliente).EndInit();
             ResumeLayout(false);
             PerformLayout();

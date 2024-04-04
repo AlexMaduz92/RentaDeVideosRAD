@@ -114,11 +114,11 @@ namespace IPRESENTATIOS
                 DataGridViewRow row = DGVCliente.Rows[e.RowIndex];
 
                 // Asignar los valores de la fila seleccionada a los controles del formulario
-                TxtIdCliente.Text = row.Cells[0].Value.ToString(); 
+                TxtIdCliente.Text = row.Cells[0].Value.ToString();
                 TxtNombres.Text = row.Cells[1].Value.ToString();
-                TxtApellidos.Text = row.Cells[2].Value.ToString(); 
-                DTPFechaIngreso.Value = (DateTime)row.Cells[3].Value; 
-                CBActivo.Checked = (bool)row.Cells[4].Value; 
+                TxtApellidos.Text = row.Cells[2].Value.ToString();
+                DTPFechaIngreso.Value = (DateTime)row.Cells[3].Value;
+                CBActivo.Checked = (bool)row.Cells[4].Value;
             }
         }
 
@@ -211,6 +211,11 @@ namespace IPRESENTATIOS
             TxtApellidos.Text = "";
             DTPFechaIngreso.Value = DateTime.Now;
             CBActivo.Checked = false;
+        }
+
+        private void ICliente_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

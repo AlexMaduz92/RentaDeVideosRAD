@@ -2,9 +2,6 @@
 using Datos.Entidades;
 using Datos.Repositories;
 using Datos.Repository;
-using System;
-using System.Linq;
-using System.Windows.Forms;
 
 namespace IPRESENTATIOS
 {
