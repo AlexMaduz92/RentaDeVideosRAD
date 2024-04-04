@@ -37,8 +37,6 @@
             label7 = new Label();
             label8 = new Label();
             TxtIdRenta = new TextBox();
-            TxtClienteId = new TextBox();
-            TxtPeliculaId = new TextBox();
             DTPFRenta = new DateTimePicker();
             DTPFRetorno = new DateTimePicker();
             TxtCantidad = new TextBox();
@@ -47,6 +45,10 @@
             BtnRentar = new Button();
             BtnActualizar = new Button();
             BtnEliminar = new Button();
+            CBClienteId = new ComboBox();
+            CBPeliculaId = new ComboBox();
+            label9 = new Label();
+            LblTotal = new Label();
             ((System.ComponentModel.ISupportInitialize)DGVRenta).BeginInit();
             SuspendLayout();
             // 
@@ -129,20 +131,6 @@
             TxtIdRenta.Size = new Size(352, 31);
             TxtIdRenta.TabIndex = 8;
             // 
-            // TxtClienteId
-            // 
-            TxtClienteId.Location = new Point(224, 102);
-            TxtClienteId.Name = "TxtClienteId";
-            TxtClienteId.Size = new Size(352, 31);
-            TxtClienteId.TabIndex = 9;
-            // 
-            // TxtPeliculaId
-            // 
-            TxtPeliculaId.Location = new Point(224, 152);
-            TxtPeliculaId.Name = "TxtPeliculaId";
-            TxtPeliculaId.Size = new Size(352, 31);
-            TxtPeliculaId.TabIndex = 10;
-            // 
             // DTPFRenta
             // 
             DTPFRenta.Location = new Point(224, 197);
@@ -207,11 +195,51 @@
             BtnEliminar.Text = "Eliminar";
             BtnEliminar.UseVisualStyleBackColor = true;
             // 
+            // CBClienteId
+            // 
+            CBClienteId.FormattingEnabled = true;
+            CBClienteId.Location = new Point(224, 100);
+            CBClienteId.Name = "CBClienteId";
+            CBClienteId.Size = new Size(352, 33);
+            CBClienteId.TabIndex = 19;
+            // 
+            // CBPeliculaId
+            // 
+            CBPeliculaId.FormattingEnabled = true;
+            CBPeliculaId.Location = new Point(224, 144);
+            CBPeliculaId.Name = "CBPeliculaId";
+            CBPeliculaId.Size = new Size(352, 33);
+            CBPeliculaId.TabIndex = 20;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(738, 243);
+            label9.Name = "label9";
+            label9.Size = new Size(53, 25);
+            label9.TabIndex = 21;
+            label9.Text = "Total:";
+            // 
+            // LblTotal
+            // 
+            LblTotal.AutoSize = true;
+            LblTotal.Font = new Font("Segoe UI Black", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            LblTotal.ForeColor = Color.IndianRed;
+            LblTotal.Location = new Point(744, 276);
+            LblTotal.Name = "LblTotal";
+            LblTotal.Size = new Size(42, 28);
+            LblTotal.TabIndex = 22;
+            LblTotal.Text = "0.0";
+            // 
             // IPRENTA
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(966, 634);
+            Controls.Add(LblTotal);
+            Controls.Add(label9);
+            Controls.Add(CBPeliculaId);
+            Controls.Add(CBClienteId);
             Controls.Add(BtnEliminar);
             Controls.Add(BtnActualizar);
             Controls.Add(BtnRentar);
@@ -220,8 +248,6 @@
             Controls.Add(TxtCantidad);
             Controls.Add(DTPFRetorno);
             Controls.Add(DTPFRenta);
-            Controls.Add(TxtPeliculaId);
-            Controls.Add(TxtClienteId);
             Controls.Add(TxtIdRenta);
             Controls.Add(label8);
             Controls.Add(label7);
@@ -250,8 +276,6 @@
         private Label label7;
         private Label label8;
         private TextBox TxtIdRenta;
-        private TextBox TxtClienteId;
-        private TextBox TxtPeliculaId;
         private DateTimePicker DTPFRenta;
         private DateTimePicker DTPFRetorno;
         private TextBox TxtCantidad;
@@ -260,5 +284,9 @@
         private Button BtnRentar;
         private Button BtnActualizar;
         private Button BtnEliminar;
+        private ComboBox CBClienteId;
+        private ComboBox CBPeliculaId;
+        private Label label9;
+        private Label LblTotal;
     }
 }
